@@ -159,7 +159,7 @@ class WDS_Required_Plugins {
 		$network_wide = $network ? true : apply_filters( 'wds_required_plugin_network_activate', is_multisite(), $plugin, $network );
 
 		// Make sure our plugin exists before activating it
-		if ( ! file_exists( $plugin ) ) {
+		if ( ! file_exists( trailingslashit( WP_PLUGIN_DIR ) . $plugin ) ) {
 			return $this->log_error( $plugin, __( 'File does not exist.', 'wds-required-plugins' ), $network_wide );
 		}
 
@@ -246,7 +246,7 @@ class WDS_Required_Plugins {
 		$required_plugins = array_unique( array_merge( $this->get_required_plugins(), $this->get_network_required_plugins() ) );
 
 		// Remove deactivate link for required plugins.
-		if ( array_key_exists( 'deactivate', $actions ) && in_array( $plugin, $required_plugins, true ) ) {
+		if ( in_array( $plugin, $required_plugins, true ) ) {
 
 			// Filter if you don't want the required plugin to be network-required by default.
 			if ( ! is_multisite() || apply_filters( 'wds_required_plugin_network_activate', true, $plugin ) ) {
