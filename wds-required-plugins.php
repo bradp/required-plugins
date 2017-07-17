@@ -215,7 +215,7 @@ class WDS_Required_Plugins {
 		if ( apply_filters( 'wds_required_plugins_use_error_log', true ) ) {
 			if ( 
 				( ! defined( 'VIP_GO_ENV' ) || 'production' !== VIP_GO_ENV ) &&
-				( ! defined( 'WPCOM_IS_VIP_ENV ) || ! WPCOM_IS_VIP_ENV )
+				( ! defined( 'WPCOM_IS_VIP_ENV' ) || ! WPCOM_IS_VIP_ENV )
 			) {
 				error_log( $full_error );
 			}
