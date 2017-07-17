@@ -213,7 +213,12 @@ class WDS_Required_Plugins {
 
 		// Trigger our error, with all our log messages.
 		if ( apply_filters( 'wds_required_plugins_use_error_log', true ) ) {
-			error_log( $full_error );
+			if ( 
+				( ! defined( 'VIP_GO_ENV' ) || 'production' !== VIP_GO_ENV ) &&
+				( ! defined( 'WPCOM_IS_VIP_ENV ) || ! WPCOM_IS_VIP_ENV )
+			) {
+				error_log( $full_error );
+			}
 		} else {
 			trigger_error( $full_error );
 		}
