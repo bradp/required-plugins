@@ -1,17 +1,17 @@
 <?php // @codingStandardsIgnoreLine: Filename okay here.
 /**
- * Plugin Name: WDS Required Plugins
- * Plugin URI:  http://webdevstudios.com
+ * Plugin Name: Required Plugins
+ * Plugin URI:  https://bradparbs.com
  * Description: Forcefully require specific plugins to be activated.
- * Author:      WebDevStudios
- * Author URI:  http://webdevstudios.com
+ * Author:      Brad Parbs
+ * Author URI:  https://bradparbs.com
  * Version:     1.2.1
- * Domain:      wds-required-plugins
+ * Domain:      required-plugins
  * License:     GPLv2
  * Path:        languages
  * Props:       1.0.0 - Patrick Garman, Justin Sternberg, Brad Parbs
  *
- * @package     WDS_Required_Plugins
+ * @package     Required_Plugins
  * @since       0.1.4
  *
  * Required:    true
@@ -30,7 +30,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @subpackage Project
  * @since      Unknown
  */
-final class WDS_Required_Plugins {
+final class Required_Plugins {
 
 	/**
 	 * Instance of this class.
@@ -38,7 +38,7 @@ final class WDS_Required_Plugins {
 	 * @author Justin Sternberg
 	 * @since Unknown
 	 *
-	 * @var WDS_Required_Plugins object
+	 * @var Required_Plugins object
 	 */
 	public static $instance = null;
 
@@ -91,7 +91,7 @@ final class WDS_Required_Plugins {
 	 * @since  0.1.0
 	 * @author Justin Sternberg
 	 *
-	 * @return WDS_Required_Plugins A single instance of this class.
+	 * @return Required_Plugins A single instance of this class.
 	 */
 	public static function init() {
 		if ( null === self::$instance ) {
@@ -159,7 +159,7 @@ final class WDS_Required_Plugins {
 		 * @since 1.0.0
 		 * @param array $incom A list of tests that determine incompatibilities.
 		 */
-		$filter = apply_filters( 'wds_required_plugins_incompatibilities', $this->incompatibilities );
+		$filter = apply_filters( 'required_plugins_incompatibilities', $this->incompatibilities );
 		if ( is_array( $filter ) ) {
 
 			// The filter might have added more tests, use those.
@@ -243,7 +243,7 @@ final class WDS_Required_Plugins {
 		 * @param string $plugin        The plugin being activated.
 		 * @param string $network       On what network?
 		 */
-		$auto_activate = apply_filters( 'wds_required_plugin_auto_activate', true, $plugin, $network );
+		$auto_activate = apply_filters( 'required_plugin_auto_activate', true, $plugin, $network );
 		if ( ! $auto_activate ) {
 
 			// Don't auto-activate.
@@ -260,7 +260,7 @@ final class WDS_Required_Plugins {
 		 * @param string $plugin       The plugin being activated.
 		 * @param string $network      The network.
 		 */
-		$is_multisite = apply_filters( 'wds_required_plugin_network_activate', is_multisite(), $plugin, $network );
+		$is_multisite = apply_filters( 'required_plugin_network_activate', is_multisite(), $plugin, $network );
 
 		// Filter if you don't want the required plugin to network-activate by default.
 		$network_wide = $network ? true : $is_multisite;
@@ -284,7 +284,7 @@ final class WDS_Required_Plugins {
 
 		// Make sure our plugin exists before activating it
 		if ( ! file_exists( trailingslashit( WP_PLUGIN_DIR ) . $plugin ) ) {
-			return $this->log_error( $plugin, __( 'File does not exist.', 'wds-required-plugins' ), $network_wide );
+			return $this->log_error( $plugin, __( 'File does not exist.', 'required-plugins' ), $network_wide );
 		}
 
 		// Activate the plugin.
@@ -300,7 +300,7 @@ final class WDS_Required_Plugins {
 		 *
 		 * For instance to disable all logging you could:
 		 *
-		 *     add_filter( 'wds_required_plugin_log_if_not_found', '__return_false' );
+		 *     add_filter( 'required_plugin_log_if_not_found', '__return_false' );
 		 *
 		 * Or, you could do it on a case-by-case basis with the $plugin being sent.
 		 *
@@ -312,7 +312,7 @@ final class WDS_Required_Plugins {
 		 *                            if you would like to override that and not log it,
 		 *                            for instance, if it's intentional.
 		 */
-		$log_not_found = apply_filters( 'wds_required_plugin_log_if_not_found', true, $plugin, $result, $network );
+		$log_not_found = apply_filters( 'required_plugin_log_if_not_found', true, $plugin, $result, $network );
 
 		if ( ! $log_not_found ) {
 			return;
@@ -338,15 +338,15 @@ final class WDS_Required_Plugins {
 		}
 
 		// If auto-activation failed, and there is an error, log it.
-		if ( ! apply_filters( 'wds_required_plugin_log_if_not_found', true, $plugin, $result, $network ) ) {
+		if ( ! apply_filters( 'required_plugin_log_if_not_found', true, $plugin, $result, $network ) ) {
 			return $result;
 		}
 
 		// translators: %1 and %2 are explained below. Set default log text.
-		$default_log_text = __( 'Required Plugin auto-activation failed for: %1$s, with message: %2$s', 'wds-required-plugins' );
+		$default_log_text = __( 'Required Plugin auto-activation failed for: %1$s, with message: %2$s', 'required-plugins' );
 
 		// Filter the logging message format/text.
-		$log_msg_format = apply_filters( 'wds_required_plugins_error_log_text', $default_log_text, $plugin, $result, $network );
+		$log_msg_format = apply_filters( 'required_plugins_error_log_text', $default_log_text, $plugin, $result, $network );
 
 		// Get our error message.
 		if ( is_a( $result, 'WP_Error' ) ) {
@@ -363,9 +363,9 @@ final class WDS_Required_Plugins {
 		 *
 		 * @param bool $stop_not_found Set to false to not halt execution if a plugin is not found.
 		 */
-		$stop_not_found = apply_filters( 'wds_required_plugin_stop_if_not_found', false, $plugin, $result, $network );
+		$stop_not_found = apply_filters( 'required_plugin_stop_if_not_found', false, $plugin, $result, $network );
 
-		$use_error_log = apply_filters( 'wds_required_plugins_use_error_log', true );
+		$use_error_log = apply_filters( 'required_plugins_use_error_log', true );
 
 		// Build our full error message format.
 		$full_error = sprintf( esc_attr( $log_msg_format ), esc_attr( $plugin ), esc_attr( $error_message ) );
@@ -393,7 +393,7 @@ final class WDS_Required_Plugins {
 	 * @author Unknown
 	 */
 	public function required_text_markup() {
-		$default = sprintf( $this->required_text_code, __( 'Required Plugin', 'wds-required-plugins' ) );
+		$default = sprintf( $this->required_text_code, __( 'Required Plugin', 'required-plugins' ) );
 
 		/**
 		 * Set the value for what shows when a plugin is required.
@@ -406,7 +406,7 @@ final class WDS_Required_Plugins {
 		 *
 		 * @param string $default The default value that you can change.
 		 */
-		$filtered = apply_filters( 'wds_required_plugins_text', $default );
+		$filtered = apply_filters( 'required_plugins_text', $default );
 
 		// The property on this object we'll set for use later.
 		if ( is_string( $filtered ) ) {
@@ -439,7 +439,7 @@ final class WDS_Required_Plugins {
 		if ( in_array( $plugin, $required_plugins, true ) ) {
 
 			// Filter if you don't want the required plugin to be network-required by default.
-			if ( ! is_multisite() || apply_filters( 'wds_required_plugin_network_activate', true, $plugin ) ) {
+			if ( ! is_multisite() || apply_filters( 'required_plugin_network_activate', true, $plugin ) ) {
 				$actions['deactivate'] = $this->required_text;
 			}
 		}
@@ -450,7 +450,7 @@ final class WDS_Required_Plugins {
 	/**
 	 * Remove required plugins from the plugins list, if enabled.
 	 *
-	 * Must be enabled using the wds_required_plugin_remove_from_list filter.
+	 * Must be enabled using the required_plugin_remove_from_list filter.
 	 * When enabled, all the plugins that end up being WDS Required
 	 * also do not show in the plugins list.
 	 *
@@ -470,14 +470,14 @@ final class WDS_Required_Plugins {
 		 *
 		 * E.g.:
 		 *
-		 *     add_filter( 'wds_required_plugin_remove_from_list', '__return_true' );
+		 *     add_filter( 'required_plugin_remove_from_list', '__return_true' );
 		 *
 		 * @author  Brad Parbs
 		 * @since   Unknown
 		 *
 		 * @param array $enabled Whether or not removing all plugins from the list is enabled.
 		 */
-		$enabled = apply_filters( 'wds_required_plugin_remove_from_list', false );
+		$enabled = apply_filters( 'required_plugin_remove_from_list', false );
 
 		// Allow for removing all plugins from the plugins list.
 		if ( false === $enabled ) {
@@ -498,7 +498,7 @@ final class WDS_Required_Plugins {
 	}
 
 	/**
-	 * Get the plugins that are required for the project. Plugins will be registered by the wds_required_plugins filter
+	 * Get the plugins that are required for the project. Plugins will be registered by the required_plugins filter
 	 *
 	 * @author Justin Sternberg
 	 * @author Aubrey Portwood  Added filter documentation.
@@ -512,7 +512,7 @@ final class WDS_Required_Plugins {
 		 *
 		 * Example:
 		 *
-		 *     function wds_required_plugins_add( $required ) {
+		 *     function required_plugins_add( $required ) {
 		 *         $required = array_merge( $required, array(
 		 *             'akismet/akismet.php',
 		 *             'wordpress-importer/wordpress-importer.php',
@@ -520,7 +520,7 @@ final class WDS_Required_Plugins {
 		 *
 		 *         return $required;
 		 *     }
-		 *     add_filter( 'wds_network_required_plugins', 'wds_required_plugins_add' );
+		 *     add_filter( 'wds_network_required_plugins', 'required_plugins_add' );
 		 *
 		 * @author Brad Parbs
 		 * @author Aubrey Portwood
@@ -529,7 +529,7 @@ final class WDS_Required_Plugins {
 		 *
 		 * @var array
 		 */
-		$required_plugins = (array) apply_filters( 'wds_required_plugins', [] );
+		$required_plugins = (array) apply_filters( 'required_plugins', [] );
 
  		// Get the path & filename of ourself.
  		$self = plugin_basename( __FILE__ );
@@ -537,7 +537,7 @@ final class WDS_Required_Plugins {
  		// If this is filtered to false, we bail early. Default to active state of
  		// the plugin, which means that if we are installed as a plugin, we'll be
  		// including ourselves in the array of required plugins unless filtered.
- 		if ( ! apply_filters( 'wds_required_plugins_include_self', is_plugin_active( $self )  ) ) {
+ 		if ( ! apply_filters( 'required_plugins_include_self', is_plugin_active( $self )  ) ) {
  			return $required;
  		}
 
@@ -563,7 +563,7 @@ final class WDS_Required_Plugins {
 		 *
 		 * Example:
 		 *
-		 *     function wds_required_plugins_add( $required ) {
+		 *     function required_plugins_add( $required ) {
 		 *         $required = array_merge( $required, array(
 		 *             'akismet/akismet.php',
 		 *             'wordpress-importer/wordpress-importer.php',
@@ -571,7 +571,7 @@ final class WDS_Required_Plugins {
 		 *
 		 *         return $required;
 		 *     }
-		 *     add_filter( 'wds_network_required_plugins', 'wds_required_plugins_add' );
+		 *     add_filter( 'wds_network_required_plugins', 'required_plugins_add' );
 		 *
 		 * @author Brad Parbs
 		 * @author Aubrey Portwood
@@ -621,27 +621,27 @@ final class WDS_Required_Plugins {
 		}
 
 		// Try to load mu-plugin textdomain.
-		if ( load_muplugin_textdomain( 'wds-required-plugins', '/languages/' ) ) {
+		if ( load_muplugin_textdomain( 'required-plugins', '/languages/' ) ) {
 			self::$l10n_done = true;
 			return;
 		}
 
 		// If we didn't load, load as a plugin.
-		if ( load_plugin_textdomain( 'wds-required-plugins', false, '/languages/' ) ) {
+		if ( load_plugin_textdomain( 'required-plugins', false, '/languages/' ) ) {
 			self::$l10n_done = true;
 			return;
 		}
 
 		// If we didn't load yet, load as a theme.
-		if ( load_theme_textdomain( 'wds-required-plugins', '/languages/' ) ) {
+		if ( load_theme_textdomain( 'required-plugins', '/languages/' ) ) {
 			self::$l10n_done = true;
 			return;
 		}
 
 		// If we still didn't load, assume our text domain is right where we are.
-		$locale = apply_filters( 'plugin_locale', get_locale(), 'wds-required-plugins' );
-		$mofile = __DIR__ . '/languages/wds-required-plugins-' . $locale . '.mo';
-		load_textdomain( 'wds-required-plugins', $mofile );
+		$locale = apply_filters( 'plugin_locale', get_locale(), 'required-plugins' );
+		$mofile = __DIR__ . '/languages/required-plugins-' . $locale . '.mo';
+		load_textdomain( 'required-plugins', $mofile );
 		self::$l10n_done = true;
 	}
 
@@ -691,7 +691,7 @@ final class WDS_Required_Plugins {
 		 *
 		 * @var array
 		 */
-		$values = apply_filters( 'wds_required_plugins_required_header_values', [
+		$values = apply_filters( 'required_plugins_required_header_values', [
 			'true',
 			'yes',
 			'1',
@@ -731,7 +731,7 @@ final class WDS_Required_Plugins {
 		 *
 		 * @param string $header The string to use as the identifier.
 		 */
-		$header = apply_filters( 'wds_required_plugin_header', $header_text );
+		$header = apply_filters( 'required_plugin_header', $header_text );
 
 		if ( ! is_string( $header ) || empty( $header ) ) {
 			return $header_text;
@@ -742,4 +742,4 @@ final class WDS_Required_Plugins {
 }
 
 // Init.
-WDS_Required_Plugins::init();
+Required_Plugins::init();
