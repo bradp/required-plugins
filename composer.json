@@ -1,8 +1,12 @@
 {
 	"name": "bradp/required-plugins",
-	"type": "wordpress-muplugin",
+	"type": "wordpress-plugin",
 	"description": "Make certain plugins required so that they cannot be (easily) deactivated.",
-	"require": {
-		"composer/installers": "~1.0"
-	}
+	"license": "GPL-2.0-or-later",
+	"authors": [
+	  {
+		"name": "Brad Parbs",
+		"email": "brad@bradparbs.com"
+	  }
+	]
 }
