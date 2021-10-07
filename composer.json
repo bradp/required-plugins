@@ -1,5 +1,5 @@
 {
-	"name": "bradp/wp-required-plugins",
+	"name": "bradp/required-plugins",
 	"type": "wordpress-muplugin",
 	"description": "Make certain plugins required so that they cannot be (easily) deactivated.",
 	"require": {
